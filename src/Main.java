@@ -1,84 +1,65 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import static java.lang.Math.abs;
 
 public class Main {
 
-    public static boolean positionCheck=true;
-    public static boolean solutionCheck=true;
+    public static boolean solutionCheck = true;
 
-    public static boolean backtracking(int []queens, int length)
-    {
-            for(int i=length;i<queens.length;i++) {
+    public static boolean backtracking(int[] queens, int column) {
 
-                if(checkingCorrectness(queens,i))
-                {
-                    backtracking(queens,length+1);
-                }
-                else
-                {
-                    if(queens[i]==queens.length-1)
-                    {
-                        queens[i]=0;
-                        if(i<queens.length-1)
-                        {
-                            backtracking(queens, length+1);
-                        }
+        if(column < queens.length) {
+            if (checkingCorrectness(queens, column)) {
+                backtracking(queens, column + 1);
+            } else {
+                if (queens[column] == queens.length - 1) {
+                    queens[column] = 0;
+                    if (column < queens.length - 1) {
+                        backtracking(queens, column + 1);
                     }
-                    else {
-                        queens[i]++;
-                        backtracking(queens, length);
-                    }
-                    solutionCheck=false;
-                }
-                break;
-            }
-            return solutionCheck;
-        }
-
-    public static boolean checkingCorrectness(int [] queens, int position)
-    {
-        positionCheck=true;
-        for(int i=0;i<queens.length;i++)
-        {
-            if(position==i)
-            {
-                continue;
-            }
-            else {
-                if (abs((queens[position] - queens[i])) == ((i) - position)) {
-                    positionCheck = false;
-                } else if (queens[position] == queens[i]) {
-                    positionCheck = false;
                 } else {
-                    continue;
+                    queens[column]++;
+                    backtracking(queens, column);
+                }
+                solutionCheck = false;
+            }
+        }
+        return solutionCheck;
+    }
+
+    public static boolean checkingCorrectness(int[] queens, int currentQueen) {
+        for (int checkedQueen = 0; checkedQueen < queens.length; checkedQueen++) {
+            int currentQueensRow = queens[currentQueen];
+            int remainingQueensRow = queens[checkedQueen];
+
+            if (currentQueen != checkedQueen) {
+                //diagonal
+                if (abs(currentQueensRow - remainingQueensRow) == abs(checkedQueen - currentQueen)) {
+                    return false;
+                } else if (currentQueensRow == remainingQueensRow) {
+                    return false;
                 }
             }
 
         }
-        return positionCheck;
+
+        return true;
     }
-public static void display(int[]queens)
-{
-    System.out.print("Solution is: ");
-    for (int i = 0; i < queens.length; i++) {
-        System.out.print(queens[i] + " ");
-    }
-}
 
-    public static void main(String[] args)
-    {
-            int[] queens=new int[8];
-
-            do {
-                solutionCheck=true;
-                display(queens);
-            }while(!backtracking(queens, 0));
-
-
-
+    public static void display(int[] queens) {
+        System.out.print("Solution is: ");
+        for (int queen : queens) {
+            System.out.print(queen + " ");
         }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+//        int[] queens = {0,0,0,0,0,0,0,3};
+        int[] queens = new int[8];
+        while (!backtracking(queens, 0)) {
+            solutionCheck = true;
+            display(queens);
+        }
+
+    }
 
 }
