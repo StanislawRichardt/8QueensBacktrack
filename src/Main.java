@@ -32,7 +32,7 @@ public class Main {
 
             if (currentQueen != checkedQueen) {
                 //diagonal
-                if (abs(currentQueensRow - remainingQueensRow) == abs(checkedQueen - currentQueen)) {
+                if (abs(currentQueensRow - remainingQueensRow) == checkedQueen - currentQueen) {
                     return false;
                 } else if (currentQueensRow == remainingQueensRow) {
                     return false;
@@ -55,11 +55,11 @@ public class Main {
     public static void main(String[] args) {
 //        int[] queens = {0,0,0,0,0,0,0,3};
         int[] queens = new int[8];
+
         while (!backtracking(queens, 0)) {
             solutionCheck = true;
             display(queens);
         }
 
     }
-
 }
