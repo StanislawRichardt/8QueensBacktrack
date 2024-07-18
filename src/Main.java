@@ -1,5 +1,8 @@
 import static java.lang.Math.abs;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Main {
 
     public static boolean solutionCheck = true;
@@ -52,14 +55,19 @@ public class Main {
         System.out.println();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        int[] queens = {0,0,0,0,0,0,0,3};
         int[] queens = new int[8];
 
-        while (!backtracking(queens, 0)) {
-            solutionCheck = true;
-            display(queens);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the 8 Queens Problem! Enter starting positions of Queens: ");
+        for (int i = 0; i < queens.length; i++) {
+            queens[i] = scanner.nextInt();
         }
 
+        while (!backtracking(queens, 0)) {
+            solutionCheck = true;
+        }
+        display(queens);
     }
 }
