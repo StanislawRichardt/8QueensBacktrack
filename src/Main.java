@@ -69,5 +69,6 @@ public class Main {
             solutionCheck = true;
         }
         display(queens);
+        
     }
 }
